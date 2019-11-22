@@ -1,0 +1,36 @@
+<configuration>
+    	<springProperty name="logging.path" source="logging.path"
+                    defaultValue="/var/www/webapp/logs/spring-pro"/>
+    <springProperty name="application.name" source="spring.application.name"
+                    defaultValue="spring-pro"/>
+    <springProperty name="logging.pattern.console" source="logging.pattern.console"
+                    defaultValue="%date{yyyy-MM-dd HH:mm:ss.SSSXXX} [%thread] %-5level %logger{36} - %msg%n"/>
+
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+    	<encoder>
+    		<pattern>${logging.pattern.console}</pattern>
+    	</encoder>
+    </appender>
+    
+    <appender name="businessLogFile"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${logging.path}/${application.name}.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${logging.path}/${application.name}-%d{yyyy-MM-dd_HH}.%i.zip</fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy
+                    class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>50MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${logging.pattern.console}</pattern>
+        </encoder>
+    </appender>
+
+    <logger level="DEBUG" name="com.project.springpro"/>
+    
+    <root level="INFO">
+    	<appender-ref ref="businessLogFile"/>
+    	<appender-ref ref="console"/>
+    </root>
+</configuration>

@@ -1,0 +1,4 @@
+configFileS3Info:
+    bucketName: "data-dataapi-configurationfiles.snc.com"
+    keyName: "configurations/omnidb/filteraTableFieldList.yml"
+    
